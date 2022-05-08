@@ -55,6 +55,6 @@ public class SpawnManager : MonoBehaviour
     }
     private float randomRangeZ()
     {
-        return Random.Range(roadRangeZ,roadRangeZ*10);
+        return Random.Range(roadRangeZ,roadRangeZ*5);
     }   
 }
