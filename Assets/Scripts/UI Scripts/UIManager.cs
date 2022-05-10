@@ -39,7 +39,8 @@ public class UIManager : MonoBehaviour
             InstanceUIManager = this;
             DontDestroyOnLoad(gameObject);
 
-            Destroy(GameObject.Find("Player Menu Prefab"));
+            //Destroy(GameObject.Find("Player Menu Prefab"));
+            GameObject.Find("Player Menu Prefab").gameObject.SetActive(false);
             SceneManager.LoadScene(2);
         }
         else

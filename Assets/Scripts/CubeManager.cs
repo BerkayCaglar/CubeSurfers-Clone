@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CubeManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class CubeManager : MonoBehaviour
     private bool imOnTheWall=false;
     private float distanceY;
     private bool gameIsStarted=false;
+
+    private bool imOnTheFinish=false;
     private void Start() 
     {
         FindGameObjectScripts();
@@ -33,6 +36,17 @@ public class CubeManager : MonoBehaviour
                 playerController.StartPlayerRunAnimation();
                 playerController.gameIsStopped = false;
                 gameIsStarted =true;
+            }
+            if(playerController.gameIsStopped == true && imOnTheFinish ==true)
+            {
+                /*
+                foreach(var root in gameObject.scene.GetRootGameObjects())
+                {
+                    root.gameObject.SetActive(true);
+                    return;
+                }
+                */
+                SceneManager.LoadScene(0);
             }
         }
     }
@@ -57,7 +71,6 @@ public class CubeManager : MonoBehaviour
             {
                 playerController.gameIsStopped = true;
                 GameEndSoundAndAnimation();
-                SendScore();
             }
             else if (imOnTheWall == false)
             {
@@ -74,6 +87,14 @@ public class CubeManager : MonoBehaviour
         else
         {
             imOnTheWall =false;
+        }
+        if(other.gameObject.tag == "Finish Line")
+        {
+            playerController.gameIsStopped = true;
+            GameFinish();
+            SendScore();
+            mainManager.ShowYouWon();
+            imOnTheFinish = true;
         }
     }
     private void UpgradeSoundTargetCount()
@@ -104,6 +125,11 @@ public class CubeManager : MonoBehaviour
     {
         soundManager.GameIsStoppedSound();
         playerController.DeadAnimation();
+    }
+    private void GameFinish()
+    {
+        soundManager.GameIsStoppedSound();
+        playerController.StopPlayerRunAnimation();
     }
 
     private void AddTargetInListAndSetGatheredTrue(Collider other)
