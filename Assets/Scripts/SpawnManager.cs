@@ -20,7 +20,7 @@ public class SpawnManager : MonoBehaviour
         {
             //RandomSpawnWall();
         }
-        InvokeRepeating("RandomSpawnCubeTarget",1.0f,0.2f);
+        //InvokeRepeating("RandomSpawnCubeTarget",1.0f,0.2f);
     }
     private void RandomSpawnCubeTarget()
     {
