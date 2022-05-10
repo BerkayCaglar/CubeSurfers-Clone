@@ -53,7 +53,6 @@ public class ScoreManager : MonoBehaviour
         {
             return 0;
         }
-        
     }
     private void UpdateScoreNormal()
     {
