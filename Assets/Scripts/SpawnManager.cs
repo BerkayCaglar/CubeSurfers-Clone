@@ -12,7 +12,7 @@ public class SpawnManager : MonoBehaviour
     public List<Vector3> cubes = new List<Vector3>();
     private float roadXYrange = 4.5f; 
     private float roadRangeZ = 20.0f;
-    public float randomPrefabScale;
+    public float randomPrefabScale=0;
     private void Start() 
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
