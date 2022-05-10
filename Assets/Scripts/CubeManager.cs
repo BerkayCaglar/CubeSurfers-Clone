@@ -15,8 +15,8 @@ public class CubeManager : MonoBehaviour
     private bool imOnTheWall=false;
     private float distanceY;
     private bool gameIsStarted=false;
-
-    private bool imOnTheFinish=false;
+    private bool deadToWall = false;
+    public int extraPointForTakedCubes=0;
     private void Start() 
     {
         FindGameObjectScripts();
@@ -37,17 +37,10 @@ public class CubeManager : MonoBehaviour
                 playerController.gameIsStopped = false;
                 gameIsStarted =true;
             }
-            if(playerController.gameIsStopped == true && imOnTheFinish ==true)
-            {
-                /*
-                foreach(var root in gameObject.scene.GetRootGameObjects())
+            if(Input.GetKeyDown(KeyCode.Space) && playerController.gameIsStopped == true && deadToWall == true)
                 {
-                    root.gameObject.SetActive(true);
-                    return;
+                    SceneManager.LoadScene(2);
                 }
-                */
-                SceneManager.LoadScene(0);
-            }
         }
     }
     private void OnTriggerEnter(Collider other) {
@@ -71,6 +64,8 @@ public class CubeManager : MonoBehaviour
             {
                 playerController.gameIsStopped = true;
                 GameEndSoundAndAnimation();
+                mainManager.TryAgainShow();
+                deadToWall = true;
             }
             else if (imOnTheWall == false)
             {
@@ -90,11 +85,13 @@ public class CubeManager : MonoBehaviour
         }
         if(other.gameObject.tag == "Finish Line")
         {
+            extraPointForTakedCubes=TargetsCount()*2;
             playerController.gameIsStopped = true;
             GameFinish();
             SendScore();
             mainManager.ShowYouWon();
-            imOnTheFinish = true;
+            mainManager.TryAgainShow();
+            deadToWall = true;
         }
     }
     private void UpgradeSoundTargetCount()
@@ -163,6 +160,6 @@ public class CubeManager : MonoBehaviour
     }
     private void SendScore()
     {
-        scoreManager.SendScoreToSaveFile();
+        scoreManager.SendScoreToSaveFile(extraPointForTakedCubes);
     }
 }

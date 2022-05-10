@@ -14,8 +14,10 @@ public class ScoreManager : MonoBehaviour
     private TMP_Text extraPointText;
     public TMP_Text pressSpaceBar;
     private UIManager uIManager;
+    private CubeManager cubeManager;
     private int cubePoint=2;
     private int extraPoint=5;
+    private int numberOfWork = 0;
 
     class BestScore
     {
@@ -34,7 +36,7 @@ public class ScoreManager : MonoBehaviour
             UpdateScoreFive();
         }
     }
-    private int ConvertCurrentScore()
+    public int ConvertCurrentScore()
     {
         return Convert.ToInt32(pointText.text);
     }
@@ -63,20 +65,29 @@ public class ScoreManager : MonoBehaviour
         pointText.text =Convert.ToString(ConvertCurrentScore() + extraPoint);
         extraPointText.gameObject.SetActive(true);
     }
-    public void SendScoreToSaveFile()
+    public void SendScoreToSaveFile(int extra)
     {
-        if(ConvertCurrentScore()>ConvertCurrentHighScore())
+        numberOfWork ++;
+        if(numberOfWork ==1)
         {
-            BestScore best = new BestScore();
-            best.name = uIManager.nameTextInputArea.text;
-            best.score = Convert.ToString(ConvertCurrentScore());
+            pointText.text =Convert.ToString(ConvertCurrentScore() + extra);
+            if(ConvertCurrentScore()>ConvertCurrentHighScore())
+            {
+                BestScore best = new BestScore();
+                best.name = uIManager.ReturnPlayerName();
+                best.score = Convert.ToString(ConvertCurrentScore());
 
-            string json = JsonUtility.ToJson(best);
-            File.WriteAllText(Application.persistentDataPath+"/bestscore.json",json);   
+                string json = JsonUtility.ToJson(best);
+                File.WriteAllText(Application.persistentDataPath+"/bestscore.json",json);   
+            }
         }
     }
     private void FindUIManager()
     {
         uIManager=GameObject.Find("UI Manager").GetComponent<UIManager>();
+    }
+    private void FindCubeManager()
+    {
+        cubeManager=GameObject.Find("Cube Manager").GetComponent<CubeManager>();
     }
 }
