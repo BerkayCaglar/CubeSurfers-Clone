@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private float leftBarrier = -4.5f;
     public bool gameIsStopped=false;
+    public bool gameIsStoppedForUI = false;
     void Start()
     {
         
@@ -20,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(gameIsStopped == false)
+        if(gameIsStopped == false && gameIsStoppedForUI ==false)
         {
             moveHorizontal();
             moveForward();
