@@ -113,7 +113,6 @@ public class CubeManager : MonoBehaviour
     {
         return mainManager.targets.Count;
     }
-
     private void SetParentToBaseCube(Collider other)
     {
         other.gameObject.transform.parent = gameObject.transform;
@@ -128,7 +127,6 @@ public class CubeManager : MonoBehaviour
         soundManager.GameIsStoppedSound();
         playerController.StopPlayerRunAnimation();
     }
-
     private void AddTargetInListAndSetGatheredTrue(Collider other)
     {
         mainManager.addTargetToList(other.gameObject);
