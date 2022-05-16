@@ -6911,7 +6911,7 @@ PrefabInstance:
       objectReference: {fileID: 753760183}
     - target: {fileID: 2393287427623628651, guid: 5319ca257a014884d8a57788b0f89145, type: 3}
       propertyPath: m_Constraints
-      value: 126
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 2393287427623628660, guid: 5319ca257a014884d8a57788b0f89145, type: 3}
       propertyPath: m_RootOrder
@@ -6972,6 +6972,10 @@ PrefabInstance:
     - target: {fileID: 2393287427623628661, guid: 5319ca257a014884d8a57788b0f89145, type: 3}
       propertyPath: m_Name
       value: Player Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 2393287427623628663, guid: 5319ca257a014884d8a57788b0f89145, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5319ca257a014884d8a57788b0f89145, type: 3}
