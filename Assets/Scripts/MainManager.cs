@@ -14,7 +14,8 @@ public class MainManager : MonoBehaviour
     [SerializeField]
     private GameObject postProccess;
     private PlayerController playerController;
-    private bool heIsOnEscapeMenu = false;
+    private CubeManager cubeManager;
+    public bool heIsOnEscapeMenu = false;
     public List<GameObject> targets = new List<GameObject>();
     public void addTargetToList(GameObject targetObject)
     {
@@ -32,6 +33,7 @@ public class MainManager : MonoBehaviour
     {
         tryAgain.gameObject.SetActive(false);
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        cubeManager = GameObject.Find("Player").GetComponentInChildren<CubeManager>();
     }
     private void LateUpdate() 
     {
@@ -41,6 +43,7 @@ public class MainManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape)&&heIsOnEscapeMenu == false)
         {
+            Time.timeScale = 0f;
             ESC_Menu.gameObject.SetActive(true);
             postProccess.gameObject.SetActive(true);
             playerController.gameIsStopped=true;
@@ -48,9 +51,14 @@ public class MainManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && heIsOnEscapeMenu == true)
         {
+            Time.timeScale = 1f;
             ESC_Menu.gameObject.SetActive(false);
             postProccess.gameObject.SetActive(false);
-            playerController.gameIsStopped=false;
+            
+            if(cubeManager.gameIsStarted == true && cubeManager.deadToWall == false)
+            {   
+                playerController.gameIsStopped=false;
+            }
             heIsOnEscapeMenu = false;
         }
     }

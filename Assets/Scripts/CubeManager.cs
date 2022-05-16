@@ -14,8 +14,8 @@ public class CubeManager : MonoBehaviour
     private SoundManager soundManager;
     private bool imOnTheWall=false;
     private float distanceY;
-    private bool gameIsStarted=false;
-    private bool deadToWall = false;
+    public bool gameIsStarted=false;
+    public bool deadToWall = false;
     public int extraPointForTakedCubes=0;
     private void Start() 
     {
@@ -37,7 +37,7 @@ public class CubeManager : MonoBehaviour
                 playerController.gameIsStopped = false;
                 gameIsStarted =true;
             }
-            if(Input.GetKeyDown(KeyCode.Space) && playerController.gameIsStopped == true && deadToWall == true)
+            if(Input.GetKeyDown(KeyCode.Space) && playerController.gameIsStopped == true && deadToWall == true && mainManager.heIsOnEscapeMenu == false)
                 {
                     SceneManager.LoadScene(2);
                 }
