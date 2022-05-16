@@ -1544,6 +1544,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 3932447738100435193, guid: bd11aa52ca3c5694ca8ef48502572fd9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6997054345488231998, guid: bd11aa52ca3c5694ca8ef48502572fd9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd11aa52ca3c5694ca8ef48502572fd9, type: 3}
 --- !u!4 &509884648 stripped
