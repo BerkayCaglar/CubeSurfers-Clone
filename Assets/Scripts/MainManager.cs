@@ -43,23 +43,31 @@ public class MainManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape)&&heIsOnEscapeMenu == false)
         {
-            Time.timeScale = 0f;
-            ESC_Menu.gameObject.SetActive(true);
-            postProccess.gameObject.SetActive(true);
-            playerController.gameIsStopped=true;
-            heIsOnEscapeMenu = true;
+            EnterEscapeMenu();
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && heIsOnEscapeMenu == true)
         {
-            Time.timeScale = 1f;
-            ESC_Menu.gameObject.SetActive(false);
-            postProccess.gameObject.SetActive(false);
-            
-            if(cubeManager.gameIsStarted == true && cubeManager.deadToWall == false)
-            {   
-                playerController.gameIsStopped=false;
-            }
-            heIsOnEscapeMenu = false;
+            ExitEscapeMenu();
         }
+    }
+    private void EnterEscapeMenu()
+    {
+        Time.timeScale = 0f;
+        ESC_Menu.gameObject.SetActive(true);
+        postProccess.gameObject.SetActive(true);
+        playerController.gameIsStopped=true;
+        heIsOnEscapeMenu = true;
+    }
+    public void ExitEscapeMenu()
+    {
+        Time.timeScale = 1f;
+        ESC_Menu.gameObject.SetActive(false);
+        postProccess.gameObject.SetActive(false);
+        
+        if(cubeManager.gameIsStarted == true && cubeManager.deadToWall == false)
+        {   
+            playerController.gameIsStopped=false;
+        }
+        heIsOnEscapeMenu = false;
     }
 }
