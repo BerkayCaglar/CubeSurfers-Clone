@@ -36,18 +36,21 @@ public class UIManager : MonoBehaviour
         {
             File.Delete(path);
         }
-    }
+        if (InstanceUIManager != null)
+        {
+            Destroy(InstanceUIManager.gameObject);
+            return;
+        }
+}
     public void StartButton()
     {
         if(PlayerNameIsEntered())
         {
-            // start of new code
             if (InstanceUIManager != null)
             {
-                Destroy(gameObject);
+                Destroy(InstanceUIManager.gameObject);
                 return;
             }
-            // end of new code
             InstanceUIManager = this;
             DontDestroyOnLoad(gameObject);
 

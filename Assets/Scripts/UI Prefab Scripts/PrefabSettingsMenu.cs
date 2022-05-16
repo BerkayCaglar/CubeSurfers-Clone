@@ -6,6 +6,8 @@ public class PrefabSettingsMenu : MonoBehaviour
 {
     public static PrefabSettingsMenu prefabSettingsMenuInstance;
     private float rotateSpeed = 30.0f;
+    [SerializeField]
+    private GameObject mainPrefab;
     private void Start() {
         PlayerStopAnimation();
     }
@@ -16,7 +18,7 @@ public class PrefabSettingsMenu : MonoBehaviour
     {
         transform.Rotate(new Vector3(transform.rotation.x,2,transform.rotation.z)*Time.deltaTime*rotateSpeed);
     }
-    private void PlayerStopAnimation()
+    public void PlayerStopAnimation()
     {
         gameObject.GetComponent<Animator>().SetFloat("Speed_f",0.0f);
     }
