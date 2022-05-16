@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
         public string name;
         public string score;
     }
+    // INHERITANCE
     public class Name
     {
         public string playerName;
@@ -53,7 +54,7 @@ public class UIManager : MonoBehaviour
             }
             InstanceUIManager = this;
             DontDestroyOnLoad(gameObject);
-
+            // POLYMORPHISM
             NameToJavaScriptFile();
             //Destroy(GameObject.Find("Player Menu Prefab"));
             GameObject.Find("Player Menu Prefab").gameObject.SetActive(false);
