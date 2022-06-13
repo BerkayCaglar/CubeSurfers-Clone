@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System;
 
 public class CubeManager : MonoBehaviour
 {
@@ -16,11 +18,11 @@ public class CubeManager : MonoBehaviour
     private float distanceY;
     public bool gameIsStarted=false;
     public bool deadToWall = false;
+    public bool deadToFinish = false;
     public int extraPointForTakedCubes=0;
     private void Start() 
     {
         FindGameObjectScripts();
-
         distanceY = mainManager.distanceY;
         distanceY = -distanceY;
 
@@ -39,7 +41,30 @@ public class CubeManager : MonoBehaviour
             }
             if(Input.GetKeyDown(KeyCode.Space) && playerController.gameIsStopped == true && deadToWall == true && mainManager.heIsOnEscapeMenu == false)
                 {
-                    SceneManager.LoadScene(2);
+                    if(deadToFinish)
+                    {
+                        if(SceneManager.GetActiveScene().buildIndex + 1 < 16)
+                        {
+                            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                            return;
+                        }
+                        else
+                        {
+                            if(File.Exists(Application.persistentDataPath+"/level.json"))
+                            {
+                                File.Delete(Application.persistentDataPath+"/level.json");
+                                SceneManager.LoadScene(0);
+                                PrefabSettingsMenu.prefabSettingsMenuInstance.gameObject.SetActive(true);
+                                return;
+                            }
+                            else
+                            {
+                                SceneManager.LoadScene(0);
+                            }
+                            return;
+                        }
+                    }
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
         }
     }
@@ -64,6 +89,7 @@ public class CubeManager : MonoBehaviour
             {
                 playerController.gameIsStopped = true;
                 GameEndSoundAndAnimation();
+                playerController.DeadAnimation();
                 mainManager.TryAgainShow();
                 deadToWall = true;
             }
@@ -89,9 +115,11 @@ public class CubeManager : MonoBehaviour
             playerController.gameIsStopped = true;
             GameFinish();
             SendScore();
+            scoreManager.SendLevel();
             mainManager.ShowYouWon();
-            mainManager.TryAgainShow();
+            mainManager.NextLevelShow();
             deadToWall = true;
+            deadToFinish = true;
         }
     }
     private void UpgradeSoundTargetCount()
@@ -120,7 +148,6 @@ public class CubeManager : MonoBehaviour
     private void GameEndSoundAndAnimation()
     {
         soundManager.GameIsStoppedSound();
-        playerController.DeadAnimation();
     }
     private void GameFinish()
     {

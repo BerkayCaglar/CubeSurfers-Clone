@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class MainManager : MonoBehaviour
 {
     public float distanceY = 1.1f;
@@ -9,6 +10,8 @@ public class MainManager : MonoBehaviour
     private TMP_Text youWonText;
     [SerializeField]
     private TMP_Text tryAgain;
+    [SerializeField]
+    private TMP_Text nextLevel,levelText;
     [SerializeField]
     private GameObject ESC_Menu;
     [SerializeField]
@@ -29,8 +32,13 @@ public class MainManager : MonoBehaviour
     {
         tryAgain.gameObject.SetActive(true);
     }
+    public void NextLevelShow()
+    {
+        nextLevel.gameObject.SetActive(true);
+    }
     private void Start() 
     {
+        levelText.text = (SceneManager.GetActiveScene().buildIndex - 1).ToString();
         tryAgain.gameObject.SetActive(false);
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         cubeManager = GameObject.Find("Player").GetComponentInChildren<CubeManager>();

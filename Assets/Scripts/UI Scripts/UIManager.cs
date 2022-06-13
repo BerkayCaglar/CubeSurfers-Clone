@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.IO;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -22,6 +23,11 @@ public class UIManager : MonoBehaviour
     {
         public string name;
         public string score;
+    }
+    public class LevelForStart
+    {
+        public string level;
+
     }
     // INHERITANCE
     public class Name
@@ -56,9 +62,13 @@ public class UIManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             // POLYMORPHISM
             NameToJavaScriptFile();
-            //Destroy(GameObject.Find("Player Menu Prefab"));
             GameObject.Find("Player Menu Prefab").gameObject.SetActive(false);
-            SceneManager.LoadScene(2);
+            if(ConvertLevelJsonForScene() + 1 >16)
+            {
+                SceneManager.LoadScene(2);
+                return;
+            }
+            SceneManager.LoadScene(ConvertLevelJsonForScene() + 1);
         }
         else
         {
@@ -114,6 +124,20 @@ public class UIManager : MonoBehaviour
         else
         {
             return "SELAM";
+        }
+    }
+    public int ConvertLevelJsonForScene()
+    {
+        string path = Application.persistentDataPath+"/level.json";
+        if(File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            LevelForStart level = JsonUtility.FromJson<LevelForStart>(json);
+            return Convert.ToInt32(level.level);
+        }
+        else
+        {
+            return 1;
         }
     }
     //Settings Menu Function

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -18,11 +19,16 @@ public class ScoreManager : MonoBehaviour
     private int cubePoint=2;
     private int extraPoint=5;
     private int numberOfWork = 0;
+    private int number=0;
 
     class BestScore
     {
         public string name;
         public string score;
+    }
+    class Level
+    {
+        public string level;
     }
     private void Start() {
         pointText.text = "0";
@@ -78,6 +84,34 @@ public class ScoreManager : MonoBehaviour
 
                 string json = JsonUtility.ToJson(best);
                 File.WriteAllText(Application.persistentDataPath+"/bestscore.json",json);   
+            }
+        }
+    }
+    public int ConvertLevelJson()
+    {
+        string path = Application.persistentDataPath+"/level.json";
+        if(File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            Level level = JsonUtility.FromJson<Level>(json);
+            return Convert.ToInt32(level.level);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    public void SendLevel()
+    {
+        number ++;
+        if(number ==1)
+        {
+            if(ConvertLevelJson()<SceneManager.GetActiveScene().buildIndex)
+            {
+                Level level = new Level();
+                level.level = (SceneManager.GetActiveScene().buildIndex).ToString();
+                string json = JsonUtility.ToJson(level);
+                File.WriteAllText(Application.persistentDataPath+"/level.json",json);   
             }
         }
     }

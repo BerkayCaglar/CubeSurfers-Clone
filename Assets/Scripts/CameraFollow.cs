@@ -6,10 +6,6 @@ public class CameraFollow : MonoBehaviour
 {
     [SerializeField]
     private GameObject player;
-    void Start()
-    {
-        
-    }
 
     void LateUpdate()
     {

@@ -8,19 +8,33 @@ public class PlayerController : MonoBehaviour
     private float turnSpeed;
     [SerializeField]
     private float forwardSpeed;
+    Vector3 firstPos,endPos;
     private float horizontalInput;
     private float rightBarrier = 4.5f;
-
+    private float mouseSpeed = 1f;
     private float leftBarrier = -4.5f;
     public bool gameIsStopped=false;
     public bool gameIsStoppedForUI = false;
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
+        if(Input.GetMouseButtonDown(0) && gameIsStopped == false && gameIsStoppedForUI ==false)
+        {
+            firstPos = Input.mousePosition;
+        }
+        else if(Input.GetMouseButton(0) && gameIsStopped == false && gameIsStoppedForUI ==false)
+        {
+            endPos = Input.mousePosition;
+
+            float farkX = endPos.x - firstPos.x;
+            transform.Translate(farkX * Time.deltaTime * mouseSpeed / 100,0f,0f);
+        }
+        if(Input.GetMouseButtonUp(0) && gameIsStopped == false && gameIsStoppedForUI ==false)
+        {
+            firstPos = Vector3.zero;
+            endPos = Vector3.zero;
+        }
+
+        //KeyboardControl
         if(gameIsStopped == false && gameIsStoppedForUI ==false)
         {
             moveHorizontal();
@@ -38,6 +52,7 @@ public class PlayerController : MonoBehaviour
     {
         transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
     }
+
     private void roadBorder()
     {
         if(transform.position.x > rightBarrier)
@@ -51,14 +66,14 @@ public class PlayerController : MonoBehaviour
     }
     public void StartPlayerRunAnimation()
     {
-        GetComponent<Animator>().SetFloat("Speed_f",0.6f);
+        GetComponent<Animator>().SetBool("IsRuning",true);
     }
     public void StopPlayerRunAnimation()
     {
-        GetComponent<Animator>().SetFloat("Speed_f",0f);
+        GetComponent<Animator>().SetBool("IsRuning",false);
     }
     public void DeadAnimation()
     {
-        GetComponent<Animator>().SetBool("Death_b",true);
-    }   
+        GetComponent<Animator>().SetBool("IsDead",true);
+    }
 }

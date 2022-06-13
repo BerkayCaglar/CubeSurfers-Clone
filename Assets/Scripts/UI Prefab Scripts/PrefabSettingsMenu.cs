@@ -20,7 +20,7 @@ public class PrefabSettingsMenu : MonoBehaviour
     }
     public void PlayerStopAnimation()
     {
-        gameObject.GetComponent<Animator>().SetFloat("Speed_f",0.0f);
+        gameObject.GetComponent<Animator>().SetBool("IsRuning",false);
     }
     
     private void Awake() {
