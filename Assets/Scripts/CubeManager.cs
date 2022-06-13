@@ -99,7 +99,12 @@ public class CubeManager : MonoBehaviour
                 imOnTheWall =true;
                 for(int i =TargetsCount()-1;i>=TargetsCount()-Mathf.FloorToInt(other.gameObject.transform.localScale.y);i--)
                 {
+                    GameObject tempGameObject;
+                    tempGameObject = gameObject.transform.GetChild(i).GetChild(0).gameObject;
+                    tempGameObject.transform.parent = null;
+                    tempGameObject.GetComponentInChildren<ParticleSystem>().Play();
                     Destroy(gameObject.transform.GetChild(i).gameObject);
+                    Destroy(tempGameObject,1f);
                 }
                 mainManager.targets.RemoveRange(0,Mathf.FloorToInt(other.gameObject.transform.localScale.y));
                 player.transform.position = player.transform.position + new Vector3 (0,Mathf.FloorToInt(other.gameObject.transform.localScale.y)*distanceY,0);
